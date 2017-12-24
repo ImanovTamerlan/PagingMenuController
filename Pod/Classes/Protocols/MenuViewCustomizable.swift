@@ -11,6 +11,7 @@ import Foundation
 public protocol MenuViewCustomizable {
     var backgroundColor: UIColor { get }
     var selectedBackgroundColor: UIColor { get }
+    var borderColor: UIColor { get }
     var height: CGFloat { get }
     var animationDuration: TimeInterval { get }
     var deceleratingRate: CGFloat { get }
@@ -29,6 +30,9 @@ public extension MenuViewCustomizable {
     }
     var selectedBackgroundColor: UIColor {
         return UIColor.white
+    }
+    var borderColor: UIColor {
+        return UIColor.red
     }
     var height: CGFloat {
         return 50
@@ -80,6 +84,7 @@ public enum MenuFocusMode {
     case none
     case underline(height: CGFloat, color: UIColor, horizontalPadding: CGFloat, verticalPadding: CGFloat)
     case roundRect(radius: CGFloat, horizontalPadding: CGFloat, verticalPadding: CGFloat, selectedColor: UIColor)
+    case border(radius: CGFloat, horizontalPadding: CGFloat, verticalPadding: CGFloat, selectedColor: UIColor)
 }
 
 public enum MenuPosition {

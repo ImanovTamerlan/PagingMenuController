@@ -27,6 +27,10 @@ open class MenuView: UIScrollView {
         $0.isUserInteractionEnabled = true
         return $0
     }(UIView(frame: .zero))
+    lazy fileprivate var borderedView: UIView = {
+        $0.isUserInteractionEnabled = true
+        return $0
+    }(UIView(frame: .zero))
     fileprivate var menuViewBounces: Bool {
         switch menuOptions.displayMode {
         case .standard(_, _, .scrollEnabledAndBouces),
@@ -92,6 +96,7 @@ open class MenuView: UIScrollView {
         setupContentView()
         layoutContentView()
         setupRoundRectViewIfNeeded()
+        setupBorderViewIfNeeded()
         constructor()
         layoutMenuItemViews()
         setupUnderlineViewIfNeeded()
@@ -166,6 +171,7 @@ open class MenuView: UIScrollView {
 
         animateUnderlineViewIfNeeded()
         animateRoundRectViewIfNeeded()
+        animateBorderViewIfNeeded()
     }
     
     // MARK: - Private method
@@ -287,6 +293,16 @@ open class MenuView: UIScrollView {
         contentView.addSubview(roundRectView)
     }
     
+    fileprivate func setupBorderViewIfNeeded() {
+        guard case let .border(radius, _, verticalPadding, selectedColor) = menuOptions.focusMode else { return }
+        let height = menuOptions.height - verticalPadding * 2
+        borderedView.frame = CGRect(x: 0, y: verticalPadding, width: 0, height: height)
+        borderedView.layer.cornerRadius = radius
+        borderedView.layer.borderColor = menuOptions.borderColor.cgColor
+        borderedView.layer.borderWidth = 2
+        contentView.addSubview(borderedView)
+    }
+    
     fileprivate func animateUnderlineViewIfNeeded() {
         guard case .underline(_, _, let horizontalPadding, _) = menuOptions.focusMode else { return }
         
@@ -303,6 +319,14 @@ open class MenuView: UIScrollView {
         roundRectView.frame.size.width = targetFrame.width - horizontalPadding * 2
     }
 
+    fileprivate func animateBorderViewIfNeeded() {
+        guard case .border(_, let horizontalPadding, _, _) = menuOptions.focusMode else { return }
+        
+        let targetFrame = menuItemViews[currentPage].frame
+        borderedView.frame.origin.x = targetFrame.minX + horizontalPadding
+        borderedView.frame.size.width = targetFrame.width - horizontalPadding * 2
+    }
+    
     fileprivate func relayoutMenuItemViews() {
         sortMenuItemViews()
         layoutMenuItemViews()
@@ -312,6 +336,7 @@ open class MenuView: UIScrollView {
         contentOffset.x = contentOffsetX
         animateUnderlineViewIfNeeded()
         animateRoundRectViewIfNeeded()
+        animateBorderViewIfNeeded()
     }
     
     fileprivate func adjustmentContentInsetIfNeeded() {
@@ -370,6 +395,7 @@ extension MenuView {
         switch menuOptions.focusMode {
         case .underline: underlineView.removeFromSuperview()
         case .roundRect: roundRectView.removeFromSuperview()
+        case .border: borderedView.removeFromSuperview()
         case .none: break
         }
         

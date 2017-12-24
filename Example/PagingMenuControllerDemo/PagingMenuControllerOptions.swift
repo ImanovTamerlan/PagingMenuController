@@ -44,28 +44,28 @@ struct PagingMenuOptions1: PagingMenuControllerCustomizable {
     
     struct MenuItemUsers: MenuItemViewCustomizable {
         var displayMode: MenuItemDisplayMode {
-            let title = MenuItemText(text: "Menu")
+            let title = MenuItemText(text: "Menu§12")
             let description = MenuItemText(text: String(describing: self))
             return .multilineText(title: title, description: description)
         }
     }
     struct MenuItemRepository: MenuItemViewCustomizable {
         var displayMode: MenuItemDisplayMode {
-            let title = MenuItemText(text: "Menu")
+            let title = MenuItemText(text: "M2§1enu")
             let description = MenuItemText(text: String(describing: self))
             return .multilineText(title: title, description: description)
         }
     }
     struct MenuItemGists: MenuItemViewCustomizable {
         var displayMode: MenuItemDisplayMode {
-            let title = MenuItemText(text: "Menu")
+            let title = MenuItemText(text: "Mensau")
             let description = MenuItemText(text: String(describing: self))
             return .multilineText(title: title, description: description)
         }
     }
     struct MenuItemOrganization: MenuItemViewCustomizable {
         var displayMode: MenuItemDisplayMode {
-            let title = MenuItemText(text: "Menu")
+            let title = MenuItemText(text: "Masenu")
             let description = MenuItemText(text: String(describing: self))
             return .multilineText(title: title, description: description)
         }
@@ -137,19 +137,58 @@ struct PagingMenuOptions4: PagingMenuControllerCustomizable {
 }
 
 struct PagingMenuOptions5: PagingMenuControllerCustomizable {
+    let usersViewController = UsersViewController.instantiateFromStoryboard()
+    let repositoriesViewController = RepositoriesViewController.instantiateFromStoryboard()
+    let gistsViewController = GistsViewController.instantiateFromStoryboard()
+    let organizationsViewController = OrganizationsViewController.instantiateFromStoryboard()
+    
     var componentType: ComponentType {
-        return .menuView(menuOptions: MenuOptions())
+        return .all(menuOptions: MenuOptions(), pagingControllers: [usersViewController, repositoriesViewController, gistsViewController, organizationsViewController])
+    }
+    
+    var lazyLoadingPage: LazyLoadingPage {
+        return .three
     }
     
     struct MenuOptions: MenuViewCustomizable {
         var displayMode: MenuDisplayMode {
-            return .infinite(widthMode: .flexible, scrollingMode: .pagingEnabled)
+            return .infinite(widthMode: .flexible, scrollingMode: .scrollEnabled)
         }
         var focusMode: MenuFocusMode {
-            return .roundRect(radius: 12, horizontalPadding: 8, verticalPadding: 8, selectedColor: UIColor.lightGray)
+            return .border(radius: 12, horizontalPadding: 8, verticalPadding: 8, selectedColor: UIColor.lightGray)
         }
         var itemsOptions: [MenuItemViewCustomizable] {
             return [MenuItemUsers(), MenuItemRepository(), MenuItemGists(), MenuItemOrganization()]
+        }
+        var backgroundColor: UIColor {
+            return UIColor.white
+        }
+        var borderColor: UIColor {
+            return UIColor(red: 250/255, green: 175/255, blue: 72/255, alpha: 1)
+        }
+    }
+    struct MenuItemUsers: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "СТО")
+            return .text(title: title)
+        }
+    }
+    struct MenuItemRepository: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "M2§Шиномонтаж")
+            return .text(title: title)
+        }
+    }
+    struct MenuItemGists: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "Автотюнинг")
+            return .text(title: title)
+        }
+    }
+    struct MenuItemOrganization: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "Автозапчасти")
+            return .text(title: title)
         }
     }
 }
