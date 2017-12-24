@@ -294,7 +294,7 @@ open class MenuView: UIScrollView {
     }
     
     fileprivate func setupBorderViewIfNeeded() {
-        guard case let .border(radius, _, verticalPadding, selectedColor) = menuOptions.focusMode else { return }
+        guard case let .border(radius, _, verticalPadding) = menuOptions.focusMode else { return }
         let height = menuOptions.height - verticalPadding * 2
         borderedView.frame = CGRect(x: 0, y: verticalPadding, width: 0, height: height)
         borderedView.layer.cornerRadius = radius
@@ -320,7 +320,7 @@ open class MenuView: UIScrollView {
     }
 
     fileprivate func animateBorderViewIfNeeded() {
-        guard case .border(_, let horizontalPadding, _, _) = menuOptions.focusMode else { return }
+        guard case .border(_, let horizontalPadding, _) = menuOptions.focusMode else { return }
         
         let targetFrame = menuItemViews[currentPage].frame
         borderedView.frame.origin.x = targetFrame.minX + horizontalPadding

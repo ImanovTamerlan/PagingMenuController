@@ -155,7 +155,7 @@ struct PagingMenuOptions5: PagingMenuControllerCustomizable {
             return .infinite(widthMode: .flexible, scrollingMode: .scrollEnabled)
         }
         var focusMode: MenuFocusMode {
-            return .border(radius: 12, horizontalPadding: 8, verticalPadding: 8, selectedColor: UIColor.lightGray)
+            return .border(radius: 12, horizontalPadding: 8, verticalPadding: 8)
         }
         var itemsOptions: [MenuItemViewCustomizable] {
             return [MenuItemUsers(), MenuItemRepository(), MenuItemGists(), MenuItemOrganization()]
